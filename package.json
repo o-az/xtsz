@@ -1,0 +1,72 @@
+{
+  "name": "xtsz",
+  "version": "0.0.1",
+  "description": "TypeScript & Node.js runner with ESM, CJS, and HTTP imports support.",
+  "type": "module",
+  "bin": "./dist/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    "./bin": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsup --config ./tsup.config.ts",
+    "lint": "eslint --fix . --ext js,cjs,mjs,jsx,ts,cts,mts,tsx,mdx,json --cache",
+    "format": "prettier . --ignore-path .eslintignore --write --ignore-unknown --cache",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx ./test/index.test.ts",
+    "prepare-test": "/bin/bash ./scripts/prepare-test.sh",
+    "release": "pnpx bumpp package.json --commit --push --tag",
+    "prerelease": "pnpm build",
+    "prepublishOnly": "pnpm build",
+    "clean": "rm -rf dist *.tgz",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "dependencies": {
+    "esbuild": "^0.17.17",
+    "execa": "^7.1.1",
+    "meow": "^11.0.0",
+    "tsx": "^3.12.6"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.6",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "bumpp": "^9.1.0",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-security": "^1.7.1",
+    "eslint-plugin-unicorn": "^46.0.0",
+    "prettier": "^2.8.4",
+    "simple-git-hooks": "^2.8.1",
+    "tsup": "^6.6.3",
+    "typescript": "^5.0.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm remove xtsz | true && pnpm clean && pnpm install && pnpm format && pnpm lint && pnpm typecheck"
+  },
+  "engines": {
+    "node": ">=18",
+    "yarn": ">>>use-pnpm<<<",
+    "npm": ">>>use-pnpm<<<",
+    "pnpm": ">=8.0.0"
+  },
+  "homepage": "github:o-az/xtsz",
+  "repository": "github:o-az/xtsz",
+  "bugs": "github:o-az/xtsz/issues",
+  "author": "Omar Aziz <omaraziz.dev@gmail.com> (https://github.com/o-az)",
+  "keywords": [
+    "typescript",
+    "node.js",
+    "esm",
+    "cjs",
+    "runner",
+    "esbuild",
+    "https-imports"
+  ],
+  "license": "MIT"
+}
