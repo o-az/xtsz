@@ -137,7 +137,7 @@ jobs:
       # GitHub Package Registry requires the package name to be scoped to the repository
       - name: Update package.json "name"
         run: |
-          sed -i 's/"name": ".*"/"name": "@${{ github.repository }}"/' package.json
+          sed -i 's/"name": ".*"/"name": "@o-az\/xtsz"/' package.json
 
       - name: 'Publish'
         env:
