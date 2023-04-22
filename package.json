@@ -47,7 +47,7 @@
     "typescript": "^5.0.4"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm remove xtsz | true && pnpm clean && pnpm install && pnpm format && pnpm lint && pnpm typecheck"
+    "pre-commit": "pnpm format && pnpm lint && pnpm typecheck"
   },
   "engines": {
     "node": ">=18",

@@ -5,4 +5,5 @@ pnpm clean
 pnpm cache clean
 pnpm build
 pnpm pack
-pnpm add --save-dev ./xtsz-0.0.1.tgz
+VERSION=$(node --print "require('./package.json').version")
+pnpm add --save-dev ./xtsz-$VERSION.tgz
