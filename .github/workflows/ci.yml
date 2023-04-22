@@ -134,6 +134,11 @@ jobs:
         run: |
           echo "//npm.pkg.github.com:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
 
+      # GitHub Package Registry requires the package name to be scoped to the repository
+      - name: Update package.json "name"
+        run: |
+          sed -i 's/"name": ".*"/"name": "@${{ github.repository }}"/' package.json
+
       - name: 'Publish'
         env:
           NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

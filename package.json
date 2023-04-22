@@ -1,7 +1,7 @@
 {
   "name": "xtsz",
   "version": "0.0.3",
-  "description": "TypeScript & Node.js runner with ESM, CJS, and HTTP imports support.",
+  "description": "TypeScript & Node.js runner with ESM, CJS, and HTTP/S imports support.",
   "type": "module",
   "bin": "./dist/index.js",
   "exports": {
@@ -56,7 +56,7 @@
     "pnpm": ">=8.0.0"
   },
   "homepage": "github:o-az/xtsz",
-  "repository": "github:o-az/xtsz",
+  "repository": "https://github.com/o-az/xtsz.git",
   "bugs": "github:o-az/xtsz/issues",
   "author": "Omar Aziz <omaraziz.dev@gmail.com> (https://github.com/o-az)",
   "keywords": [
