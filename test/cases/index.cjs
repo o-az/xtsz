@@ -5,3 +5,9 @@ const {
 const result = example()
 
 console.log({ result })
+;(async () => {
+  let promise = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+  let data = await promise.json()
+
+  console.log(data)
+})()

@@ -1,6 +1,15 @@
 # **`xtsz`**  
 
 ```sh
+# pnpm
+pnpm add --save-dev xtsz
+# yarn
+yarn add --dev xtsz
+# npm
+npm install --save-dev xtsz
+```
+
+```sh
 xtsz is a TypeScript and JavaScript (Node.js) runner that supports https-imports.
 It can run ESM and CJS: .ts, .js, .cjs, .mjs.
 
@@ -9,7 +18,7 @@ Usage:
 
 
 Options:
-  --file, -f  The file to run. Can be passed as a flag or as an argument.
+  --file  The file to run. Can be passed as a flag or as an argument.
   --help, -h  Show this help message.
 
 Examples:

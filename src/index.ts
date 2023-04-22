@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import meow from 'meow'
 import { $, execa } from 'execa'
 import * as esbuild from 'esbuild'
@@ -24,24 +25,33 @@ function woof() {
   return filePath
 }
 
-//
-;(async () => {
-  const process = await import('node:process')
-  if (process.argv[2] === 'help') return process.stdout.write(helpMessage)
-  const filePath = woof()
-  const ENTRY_POINT = filePath
-  const OUT_FILE = `/tmp/${Date.now()}-out.js`
+async function main() {
+  try {
+    const process = await import('node:process')
+    if (process.argv[2] === 'help') return process.stdout.write(helpMessage)
+    const filePath = woof()
+    const ENTRY_POINT = filePath
+    const OUT_FILE = `/tmp/${Date.now()}-out.mjs`
 
-  await esbuild.build({
-    entryPoints: [ENTRY_POINT],
-    bundle: true,
-    outfile: OUT_FILE,
-    plugins: [httpPlugin],
-  })
+    await esbuild.build({
+      entryPoints: [ENTRY_POINT],
+      bundle: true,
+      outfile: OUT_FILE,
+      target: 'esnext',
+      format: 'esm',
+      plugins: [httpPlugin],
+    })
 
-  const { stdout } = await execa('tsx', [OUT_FILE])
-  process.stdout.write(stdout)
-  // lastly, remove the file
-  await $`rm -rf ${OUT_FILE}`
-  return stdout
-})()
+    const { stdout } = await execa('tsx', [OUT_FILE])
+    process.stdout.write(stdout)
+    // lastly, remove the file
+    await $`rm -rf ${OUT_FILE}`
+    return stdout
+  } catch (error) {
+    console.error(error)
+    console.info('\n\n\nPlease report this error to https://github.com/o-az/xtsz/issues. Really appreciate it!')
+    process.exit(1)
+  }
+}
+
+main()

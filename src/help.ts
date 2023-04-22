@@ -13,7 +13,7 @@ ${ansi.bold}Usage:${ansi.reset}
   $${ansi.green} xtsz <filepath> ${ansi.reset}
 
 ${ansi.bold}Options:${ansi.reset}
-  ${ansi.green}--file, -f${ansi.reset}${ansi.brightPurple}  The file to run. Can be passed as a flag or as an argument. ${ansi.reset}
+  ${ansi.green}--file ${ansi.reset}${ansi.brightPurple}  The file to run. Can be passed as a flag or as an argument. ${ansi.reset}
   ${ansi.green}--help, -h${ansi.reset}${ansi.brightPurple}  Show this help message. ${ansi.reset}
 
 ${ansi.bold}Examples:${ansi.reset}

@@ -110,6 +110,7 @@ jobs:
   publish-gpr:
     name: 'Publish: GitHub Package Registry'
     needs: [test]
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

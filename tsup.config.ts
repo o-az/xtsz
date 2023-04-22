@@ -7,7 +7,7 @@ export default defineConfig({
   minify: true,
   outDir: './dist',
   platform: 'node',
+  target: 'esnext',
   format: ['esm'],
   entry: ['./src/index.ts'],
-  banner: _context => ({ js: `#!/usr/bin/env node` }),
 })
