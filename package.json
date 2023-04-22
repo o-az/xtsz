@@ -1,6 +1,6 @@
 {
   "name": "xtsz",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "TypeScript & Node.js runner with ESM, CJS, and HTTP imports support.",
   "type": "module",
   "bin": "./dist/index.js",
