@@ -2,31 +2,29 @@
 import fs from 'node:fs'
 import url from 'node:url'
 import path from 'node:path'
+import process from 'node:process'
 import { build } from 'esbuild'
 import { $, execa } from 'execa'
 import { helpMessage } from './help'
 import { httpPlugin } from './https-loader'
 
 const absolutePath = (_path: string) => path.join(process.cwd(), _path)
-// const isHttp = (urlString: string) => urlString.indexOf('http') === 0 || urlString.indexOf('https') === 0
 
 async function main() {
   try {
     const [urlOrPath, isURL] = meow()
-
     const entryPointPath = entryPoint({ urlOrPath, isURL })
-
     // create a temporary file for esbuild to write to
     const outFile = `/tmp/${Date.now()}-out.mjs`
-
     await build({
       entryPoints: [entryPointPath],
-      bundle: true,
+      plugins: [httpPlugin],
       outfile: outFile,
+      bundle: true,
       target: 'esnext',
       format: 'esm',
-      plugins: [httpPlugin],
     })
+
     Object.assign(process.env, { NODE_NO_WARNINGS: 1 })
     const { stdout } = await execa('tsx', [outFile])
     process.stdout.write(stdout)
@@ -34,9 +32,9 @@ async function main() {
     await $`rm -rf ${outFile}`
     return stdout
   } catch (error) {
-    console.error(error)
-    console.info(
-      `---\n\n\n${helpMessage}\n\n\nPlease report this error to https://github.com/o-az/xtsz/issues. Really appreciate it!`
+    process.stderr.write(error + '\n')
+    process.stdout.write(
+      `---\n\n\n${helpMessage}\n\n\nIf this is a bug, Please report it to https://github.com/o-az/xtsz/issues. Really appreciate it!`
     )
     process.exit(1)
   }

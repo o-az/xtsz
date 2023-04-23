@@ -13,5 +13,8 @@
   "git.enableCommitSigning": true,
   "[typescript][javascript][json][jsonc]": {
     "editor.defaultFormatter": "rome.rome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "rome.rome"
   }
 }

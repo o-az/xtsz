@@ -1,5 +1,6 @@
 import https from 'node:https'
 import http from 'node:http'
+import { Buffer } from 'node:buffer'
 import type { Plugin } from 'esbuild'
 
 /* @see https://esbuild.github.io/plugins/#http-plugin */

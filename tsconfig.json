@@ -26,6 +26,6 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src", "./tsup.config.ts"],
+  "include": ["src", "./tsup.config.ts", "./environment.d.ts"],
   "exclude": ["node_modules", ".scratch", "dist", "./cases"]
 }
