@@ -8,14 +8,11 @@
     "./package.json": "./package.json",
     "./bin": "./dist/index.js"
   },
-  "files": [
-    "dist",
-    "package.json"
-  ],
+  "files": ["dist", "package.json"],
   "scripts": {
     "build": "tsup --config ./tsup.config.ts",
-    "lint": "eslint --fix . --ext js,cjs,mjs,jsx,ts,cts,mts,tsx,mdx,json --cache",
-    "format": "prettier . --ignore-path .eslintignore --write --ignore-unknown --cache",
+    "lint": "rome check . --apply",
+    "format": "rome format . --write",
     "typecheck": "tsc --noEmit",
     "test": "tsx ./test/index.test.ts",
     "prepare-test": "/bin/bash ./scripts/prepare-test.sh",
@@ -28,22 +25,15 @@
   "dependencies": {
     "esbuild": "^0.17.17",
     "execa": "^7.1.1",
-    "meow": "^11.0.0",
     "tsx": "^3.12.6"
   },
   "devDependencies": {
     "@types/node": "^18.14.6",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
     "bumpp": "^9.1.0",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-security": "^1.7.1",
-    "eslint-plugin-unicorn": "^46.0.0",
-    "prettier": "^2.8.4",
+    "rome": "^12.0.0",
     "simple-git-hooks": "^2.8.1",
     "tsup": "^6.6.3",
+    "tty-table": "^4.2.1",
     "typescript": "^5.0.4"
   },
   "simple-git-hooks": {
@@ -51,22 +41,12 @@
   },
   "engines": {
     "node": ">=18",
-    "yarn": ">>>use-pnpm<<<",
-    "npm": ">>>use-pnpm<<<",
     "pnpm": ">=8.0.0"
   },
   "homepage": "github:o-az/xtsz",
   "repository": "https://github.com/o-az/xtsz.git",
   "bugs": "github:o-az/xtsz/issues",
   "author": "Omar Aziz <omaraziz.dev@gmail.com> (https://github.com/o-az)",
-  "keywords": [
-    "typescript",
-    "node.js",
-    "esm",
-    "cjs",
-    "runner",
-    "esbuild",
-    "https-imports"
-  ],
+  "keywords": ["typescript", "node.js", "esm", "cjs", "runner", "esbuild", "https-imports"],
   "license": "MIT"
 }
