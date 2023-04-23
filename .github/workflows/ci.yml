@@ -60,4 +60,4 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          pnpm publish --access=public --registry=https://registry.npmjs.org --no-git-checks
+          pnpm publish --access=public --registry=https://registry.npmjs.org --no-git-checks --dry-run
