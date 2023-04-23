@@ -1,6 +1,6 @@
 {
   "name": "xtsz",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "TypeScript & Node.js runner with ESM, CJS, and HTTP/S imports support.",
   "type": "module",
   "bin": "./dist/index.js",
@@ -8,7 +8,10 @@
     "./package.json": "./package.json",
     "./bin": "./dist/index.js"
   },
-  "files": ["dist", "package.json"],
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "build": "tsup --config ./tsup.config.ts",
     "test": "tsx ./test/index.test.ts",
@@ -46,6 +49,14 @@
   "repository": "https://github.com/o-az/xtsz.git",
   "bugs": "github:o-az/xtsz/issues",
   "author": "Omar Aziz <omaraziz.dev@gmail.com> (https://github.com/o-az)",
-  "keywords": ["typescript", "node.js", "esm", "cjs", "runner", "esbuild", "https-imports"],
+  "keywords": [
+    "typescript",
+    "node.js",
+    "esm",
+    "cjs",
+    "runner",
+    "esbuild",
+    "https-imports"
+  ],
   "license": "MIT"
 }
