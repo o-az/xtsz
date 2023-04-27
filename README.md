@@ -1,3 +1,5 @@
+_**NOTE: youmust be on Node.js LTS (v18) or higher**_
+
 # **`xtsz`**  
 
 ### Install
