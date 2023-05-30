@@ -13,6 +13,7 @@
     "verbatimModuleSyntax": true,
     "noFallthroughCasesInSwitch": true,
     "useUnknownInCatchVariables": true,
+    "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["node"],
@@ -26,6 +27,6 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src", "./tsup.config.ts"],
+  "include": ["src", "./tsup.config.ts", "./environment.d.ts"],
   "exclude": ["node_modules", ".scratch", "dist", "./cases"]
 }

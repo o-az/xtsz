@@ -4,10 +4,14 @@ export default defineConfig({
   clean: true,
   shims: true,
   silent: false,
-  minify: true,
+  format: ['esm'],
   outDir: './dist',
   platform: 'node',
-  format: ['esm'],
+  target: ['esnext'],
   entry: ['./src/index.ts'],
-  banner: _context => ({ js: `#!/usr/bin/env node` }),
+  esbuildOptions: (options) => {
+    options.drop = ['console', 'debugger']
+  },
+  // we want to minify but only when about to publish
+  minify: Boolean(process.env.CI),
 })

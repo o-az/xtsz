@@ -2,7 +2,8 @@
 
 pnpm remove xtsz | true # <-- ignore error if not installed
 pnpm clean
-pnpm cache clean
+pnpm cache clean | true
 pnpm build
 pnpm pack
-pnpm add --save-dev ./xtsz-0.0.1.tgz
+VERSION=$(node --print "require('./package.json').version")
+pnpm add --save-dev ./xtsz-$VERSION.tgz
