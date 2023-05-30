@@ -2,7 +2,7 @@
 
 pnpm remove xtsz | true # <-- ignore error if not installed
 pnpm clean
-pnpm cache clean
+pnpm cache clean | true
 pnpm build
 pnpm pack
 VERSION=$(node --print "require('./package.json').version")

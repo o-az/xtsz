@@ -3,7 +3,6 @@ interface EnvironmentVariables {
   readonly CI: boolean | 'true' | 'false'
 }
 
-// rome-ignore lint/nursery/noNamespace: <explanation>
-declare module NodeJS {
+declare namespace NodeJS {
   type ProcessEnv = EnvironmentVariables
 }

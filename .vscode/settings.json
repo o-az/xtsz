@@ -1,4 +1,9 @@
 {
+  "search.exclude": {
+    "**/node_modules": true,
+    "pnpm-lock.yaml": true,
+    "*.md": true,
+  },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.importModuleSpecifier": "non-relative",
@@ -15,6 +20,12 @@
     "editor.defaultFormatter": "rome.rome"
   },
   "[typescript]": {
+    "editor.defaultFormatter": "rome.rome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "rome.rome"
+  },
+  "[javascript]": {
     "editor.defaultFormatter": "rome.rome"
   }
 }

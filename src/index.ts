@@ -1,22 +1,44 @@
 #!/usr/bin/env node
+import * as esbuild from 'esbuild'
+//
 import fs from 'node:fs'
 import url from 'node:url'
 import path from 'node:path'
+import util from 'node:util'
 import process from 'node:process'
-import { build } from 'esbuild'
-import { $, execa } from 'execa'
-import { helpMessage } from './help'
-import { httpPlugin } from './https-loader'
+import childProcess from 'node:child_process'
+//
+import { helpMessage } from './help.js'
+import { httpPlugin, treatAsString } from './https-loader.js'
 
-const absolutePath = (_path: string) => path.join(process.cwd(), _path)
+const runtimeMap = {
+  node: 'node',
+  deno: 'deno run --allow-all',
+  bun: 'bun',
+}
+
+const absolutePath = (_path: string) => (path.isAbsolute(_path) ? _path : path.join(process.cwd(), _path))
 
 async function main() {
   try {
-    const [urlOrPath, isURL] = meow()
+    const _arguments = process.argv
+    const [urlOrPath, isURL] = meow(_arguments)
+    /**
+     * If ['json', ...treatAsString].includes(fileExtension), then fetch/read it and write it to stdout
+     */
+    if (['json', ...treatAsString].includes(urlOrPath.split('.').pop() ?? '')) {
+      const content = isURL
+        ? await fetch(urlOrPath).then((response) => response.text())
+        : fs.readFileSync(urlOrPath, { encoding: 'utf-8' })
+      process.stdout.write(content)
+      process.exit(0)
+    }
+
     const entryPointPath = entryPoint({ urlOrPath, isURL })
     // create a temporary file for esbuild to write to
     const outFile = `/tmp/${Date.now()}-out.mjs`
-    await build({
+
+    await esbuild.build({
       entryPoints: [entryPointPath],
       plugins: [httpPlugin],
       outfile: outFile,
@@ -26,10 +48,16 @@ async function main() {
     })
 
     Object.assign(process.env, { NODE_NO_WARNINGS: 1 })
-    const { stdout } = await execa('tsx', [outFile])
+    // first argv is the runtime
+    const [runtimePath] = _arguments
+    const { name: runtime } = path.parse(runtimePath)
+    // run the temporary file
+    const { stdout } = await util.promisify(childProcess.exec)(
+      `${runtimeMap[runtime as unknown as keyof typeof runtimeMap]} ${outFile}`
+    )
     process.stdout.write(stdout)
     // Now that we've ran the file, we can delete it
-    await $`rm -rf ${outFile}`
+    fs.rmSync(outFile)
     return stdout
   } catch (error) {
     process.stderr.write(error + '\n')
@@ -45,25 +73,29 @@ main()
 function entryPoint({ urlOrPath, isURL }: { urlOrPath: string; isURL: boolean }): string {
   if (!isURL) return urlOrPath // <- it's a file aka path
   const temporaryEntryFile = `/tmp/${Date.now()}-entry.mjs`
+  // if json, import it as json
+  if (urlOrPath.endsWith('.json')) {
+    console.log({ urlOrPath })
+    fs.writeFileSync(temporaryEntryFile, `export default import('${urlOrPath}')`)
+    return temporaryEntryFile
+  }
   fs.writeFileSync(temporaryEntryFile, `import '${urlOrPath}'`)
   return temporaryEntryFile
 }
 
-function meow(): [entryPoint: string, isURL: boolean] {
-  const [_argument0, _argument1, argument2, argument3] = process.argv
-  // help / --help / -h or no argument
+function meow(_arguments: Array<string>): [entryPoint: string, isURL: boolean] {
+  const [_argument0, _argument1, argument2, argument3] = _arguments
   if (process.argv.length <= 2 || ['help', '--help', '-h'].includes(argument2)) {
     process.stdout.write(helpMessage)
     process.exit(0)
   }
   // url: if no argument is passed
-  if (url.parse(argument2)['protocol']) {
+  if (url.parse(argument2).protocol) {
     return [argument2, true]
   }
   // url: -u / --url flag
   if (['-u', '--url'].includes(argument2) && url.parse(argument3)) {
     return [argument3, true]
-    // process.exit(0)
   }
   // file: if no argument is passed
   if (fs.existsSync(argument2)) return [absolutePath(argument2), false]
