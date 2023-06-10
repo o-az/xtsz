@@ -27,7 +27,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "esbuild": "^0.17.19"
+    "esbuild": "^0.18.0"
   },
   "devDependencies": {
     "tsx": "^3.12.7",
